@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html lang=jp dir="ltr">
+<html lang=ja>
 
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
   <link rel="stylesheet" type="text/css" href="../assets/css/main.css">
+  <link rel="stylesheet" type="text/css" href="../assets/css/stus.css">
+  <!--script src="../assets/js/randomSelect.js"></script-->
   <title>stus:2018</title>
 </head>
 
@@ -30,18 +32,44 @@
     <hr>
     <main>
       <article class="selector">
-        <!--section>
-            <h1>App4Review</h1>
-            <p><input type="button" value="RandomSelect" onClick="disp()"></p>
-          </section-->
+
+        <section>
+          <h1>App4Review</h1>
+          <p class="button">
+            学生ページをランダムで抽出
+            <input type="button" value="RandomSelect" onClick="disp()">
+          </p>
+          <hr>
+
+        </section>
 
       </article>
-      <article class="">
+      <article>
         <h1>受講学生</h1>
-        <ol>
+        <ol id="students">
           <li><a href="#">ZOKEI Hanako</a></li>
           <li><a href="#">ZOKEI Taro</a></li>
         </ol>
+
+        <script type="text/javascript">
+          function getRandomInt(max) {
+            return Math.floor(Math.random() * Math.floor(max));
+          }
+
+          function disp() {
+            var
+              students = document.getElementById("students"),
+              stusList = students.getElementsByTagName('a');
+            //console.log(stusList);
+            var i = (getRandomInt(stusList.length));
+            var student = (stusList[i].innerText);
+            var url = (stusList[i].href);
+            if (window.confirm(student + " のページに移動しますか？")) {
+              location.href = url;
+            }
+          }
+        </script>
+        
       </article>
     </main>
     <hr>
