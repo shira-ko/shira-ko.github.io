@@ -1,7 +1,3 @@
-function getRandomInt(max) {
-  return Math.floor(Math.random() * Math.floor(max));
-}
-
 function disp() {
   var
     students = document.getElementById("students"),
@@ -12,4 +8,8 @@ function disp() {
   if (window.confirm(student + " のページに移動しますか？")) {
     location.href = url;
   }
+}
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
 }
