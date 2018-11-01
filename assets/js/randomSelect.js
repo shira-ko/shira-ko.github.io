@@ -1,8 +1,15 @@
-var hh = document.getElementById("wrapper");
-  //stusList = students.getElementsByTagName('li');
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
 
-console.log(hh);
-
-/*for (var i = 0; stusList.lemgth; i++) {
-  console.log(stusList[i].textContent);
-}*/
+function disp() {
+  var
+    students = document.getElementById("students"),
+    stusList = students.getElementsByTagName('a'),
+    i = (getRandomInt(stusList.length));
+  student = (stusList[i].innerText);
+  url = (stusList[i].href);
+  if (window.confirm(student + " のページに移動しますか？")) {
+    location.href = url;
+  }
+}
