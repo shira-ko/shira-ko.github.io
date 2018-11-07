@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
   <link rel="stylesheet" type="text/css" href="../assets/css/main.css">
   <link rel="stylesheet" type="text/css" href="../assets/css/stus.css">
-  <!--script src="../assets/js/randomSelect.js"></script-->
+  <script src="../assets/js/randomSelect.js"></script>
   <title>stus:2018</title>
 </head>
 
@@ -91,24 +91,6 @@
           <li><a href="https://yt5a.github.io/">YAMADA Takanori</a></li>
           <li><a href="https://sieunsieun.github.io">YANG Sieun</a></li>
         </ol>
-
-        <script type="text/javascript">
-          function getRandomInt(max) {
-            return Math.floor(Math.random() * Math.floor(max));
-          }
-
-          function disp() {
-            var
-              students = document.getElementById("students"),
-              stusList = students.getElementsByTagName('a'),
-              i = (getRandomInt(stusList.length));
-            student = (stusList[i].innerText);
-            url = (stusList[i].href);
-            if (window.confirm(student + " のページに移動しますか？")) {
-              location.href = url;
-            }
-          }
-        </script>
 
       </article>
     </main>
