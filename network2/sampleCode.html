@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>sampleCode</title>
+</head>
+
+<body>
+  <code>
+    <pre>
+      <span style="color:gray">
+      /*
+      * @name Patterns
+      * @description
+      * マウスカーソルを動かすと、ソフトウェアによって
+      * マウスのスピードの変化に対応したイメージが上書きされます。
+      */
+      </span>
+      function setup() {        <span style="color:gray">// setup関数を定義しています　関数は大括弧（カーリーブレース）でくくられます</span>
+        createCanvas(710, 400); <span style="color:gray">// キャンバスを作ります</span>
+        background(102);        <span style="color:gray">// 背景の色を指定します</span>
+      }
+      <span style="color:gray">
+      /*
+      * メインループでは、
+      * variableEllipse() メソッドを呼び出し、
+      * 現在のマウス位置と、以前のマウス位置を
+      * パラメーターとして送ります。
+      */
+      </span>
+      function draw() {                                     <span style="color:gray">// draw関数を定義しています</span>
+        variableEllipse(mouseX, mouseY, pmouseX, pmouseY);  <span style="color:gray">// variableEllipse関数に引数を渡しています</span>
+      }
+      <span style="color:gray">
+      /*
+      * 単純なメソッドである、variableEllipse()　は
+      * このプログラムのために特別に作られました。
+      * このメソッドは、マウスの移動速度を計算し、
+      * もし、マウスがゆっくりと移動していたら、小さな円を描き、
+      * もし、マウスが早く移動していたら、大きな円を描きます。
+      */
+      </span>
+      function variableEllipse(x, y, px, py) {  <span style="color:gray">//　関数を作っています、この関数は引数を四つ持ちます</span>
+        var speed = abs(x-px) + abs(y-py);      <span style="color:gray">// speedという変数にxからxpを引いた絶対値とyからpyを引いた絶対値を足して代入しています</span>
+        stroke(speed);                          <span style="color:gray">// strokeという関数にspeed変数を引数として渡しています</span>
+        ellipse(x, y, speed, speed);            <span style="color:gray">// ellipse関数に、座標と、高さ、幅を引数で渡しています</span>
+      }
+  </pre>
+    </code>
+
+</body>
+
+</html>
