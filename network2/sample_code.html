@@ -99,6 +99,27 @@
       }
     </code>
   </pre>
+  <h2>Example:03 太陽をかこう</h2>
+  <pre>
+    <code>
+      function setup() {
+        createCanvas(700, 700); //　700x700のキャンバスをセット
+        background(255); //　背景を白に
+        translate(width/2, height/2); //　キャンバスの中心に原点をセット
+        noFill(); //　塗りをなくす
+        for (i = 0; i < 100; i ++) { //　変数iを使ったカウンター100まで数える（中の命令文を100回繰り返す）
+          stroke(255, 255, 0); //　線の色を黄色にする
+          ellipse(0, 0, random(30, 600)); //　正円を真ん中に作成、大きさは30-600のランダム
+          stroke(255, 0, 0); // 線を赤に
+          ellipse(0, 0, random(100, 400)); // 正円を作成真ん中に作成、大きさは100-400ランダム
+        }
+      }
+
+      function draw() {
+
+      }
+    </code>
+  </pre>
 </body>
 
 </html>
