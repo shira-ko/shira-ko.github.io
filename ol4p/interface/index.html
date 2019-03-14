@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>KUAD_OL4P_2019</title>
+    <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:400,700&amp;subset=japanese" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <style type="text/css">
+      body {
+        font-family: 'M PLUS Rounded 1c';
+        color: #444444;
+        background-color: #eeeeee;
+      }
+      a:link { color: #ff00ff; }
+      a:visited { color: #444444; }
+    </style>
+  </head>
+  <body>
+    <h2>開発環境と実行環境のインターフェイス</h2>
+    <p>
+      <b><a href="https://p5js.org/">p5.js</a></b>はJavaScriptをベースとした、クリエイティブコーディング指向のフレームワーク
+      <br>jsで書かれているため、webページへの実装が容易に可能
+      <br>実行環境は主にブラウザ上となる
+    </p>
+    <h3><a href="https://editor.p5js.org/">p5.js Web Editor</a></h3>
+    <p>
+      Home/Start/p5.js Web Editorのパスでも入れる
+      <br>まずは<b>signUp</b>でアカウント作成
+      <br><b>signIn</b>すればクラウド上にファイル保存可能
+    </p>
+    <p></p>
+    <h3>インターフェイス</h3>
+    <img src="../img/if.png" alt="">
+    <p>
+      p5jsウェブエディタはウェブアプリとして作られた統合開発環境（IDE）
+    </p>
+    <h3>tutorial: Hello, World!</h3>
+    <p>
+      1: 初めてのコーディングとして<a href="https://ja.wikipedia.org/wiki/Hello_world">"Hello, World!"</a>を出力する
+      <br><b>プログラムの入力は半角英数絶対！</b>
+      <br><b>文末にはセミコロン忘れるな！</b>
+      <br><b>括弧は開いたら閉じる！</b>
+    </p>
+    <code>
+      <pre class="prettyprint lang-js">
+function setup() {
+  createCanvas(400, 400);
+}
+
+function draw() {
+  background(220);
+  text('Hello, World!', 200, 200);
+}
+      </pre>
+    </code>
+    <h4>プログラムにおける関数とは？</h4>
+    <p>
+      固有の処理を行って値を返すもの
+      <br>引数を()のなかに入れて渡し、返り値（戻り値）が返ってくる
+      <br>どちらもないものも自作できる
+    </p>
+    <p>
+      <b>初期化関数（赤）：</b>
+    <br>起動時に一度しか読まれない関数
+    </p>
+    <p>
+    <b>メインループ関数（緑）：</b>
+    <br>実行されたら、停止するまで繰り返される関数
+    </p>
+    <p>
+      <b>組込関数（青）：</b>
+      <br>フレームワークやライブラリに組み込まれ、処理が設定されている関数
+    </p>
+    <img src="../img/func.png" alt="">
+    <ul>
+      <li>setupという初期化関数のなかにcreateCanvasという組込関数が入っている</li>
+      <li>drawというメインループ関数のなかに、backgroundと、textという組込関数が入っている</li>
+      <li>初期化・メインループ関数は引数をもたない</li>
+      <li>初期化・メインループ関数のなかに実行処理を書く</li>
+      <li>組込関数は()のなかに引数を与えることで処理が行われる</li>
+      <li>引数で渡せる値の数は、関数の種類よって違う（リファレンスを見るとわかる）</li>
+      <li>組込関数にも引数を持たない関数もある</li>
+    </ul>
+    <img src="../img/func02.png" alt="">
+    <p>2: 中心に線を引いてみると、テキストの書き出し原点がわかる</p>
+    <code>
+      <pre class="prettyprint lang-js">
+        function setup() {
+          createCanvas(400, 400);
+        }
+
+        function draw() {
+          background(220);
+          text('Hello, World!', 200, 200);
+          line(200, 0, 200, 400);
+          line(0, 200, 400, 200);
+        }
+      </pre>
+    </code>
+    <p>3: テキストを中心に移動する</p>
+    <code>
+      <pre class="prettyprint lang-js">
+function setup() {
+  createCanvas(400, 400);
+}
+
+function draw() {
+  background(220);
+  text('Hello, World!', 165, 205);
+  line(200, 0, 200, 400);
+  line(0, 200, 400, 200);
+}
+      </pre>
+    </code>
+    <p>4: コメントアウトでラインを消す</p>
+    <code>
+      <pre class="prettyprint lang-js">
+        function setup() {
+          createCanvas(400, 400);
+        }
+
+        function draw() {
+          background(220);
+          text('Hello, World!', 165, 205);
+          //line(200, 0, 200, 400);
+          //line(0, 200, 400, 200);
+        }
+      </pre>
+    </code>
+    <p>5: キャンバスサイズを変えるとテキスト位置がずれる</p>
+    <code>
+      <pre class="prettyprint lang-js">
+        function setup() {
+          createCanvas(500, 300);
+        }
+
+        function draw() {
+          background(220);
+          text('Hello, World!', 165, 205);
+          //line(200, 0, 200, 400);
+          //line(0, 200, 400, 200);
+        }
+      </pre>
+    </code>
+    <p>6: 相対的な関係性を見つける</p>
+    <p>
+      <b>widthとheight:</b>
+    <br>createCanvasで設定したX方向の幅（width）と、
+    <br>Y方向の幅(height)が入った組込変数</p>
+    <code>
+      <pre class="prettyprint lang-js">
+        function setup() {
+          createCanvas(500, 300);
+        }
+
+        function draw() {
+          background(220);
+          text('Hello, World!', width / 2 - 35 , height / 2 + 5);
+          //line(200, 0, 200, 400);
+          //line(0, 200, 400, 200);
+        }
+      </pre>
+    </code>
+  </body>
+</html>

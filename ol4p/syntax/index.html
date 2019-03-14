@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>KUAD_OL4P_2019</title>
+    <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:400,700&amp;subset=japanese" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <style type="text/css">
+      body {
+        font-family: 'M PLUS Rounded 1c';
+        color: #444444;
+        background-color: #eeeeee;
+      }
+      a:link { color: #ff00ff; }
+      a:visited { color: #444444; }
+    </style>
+  </head>
+  <body>
+    <h2>プログラミングの基本構文</h2>
+    <h3>Hello, color!</h3>
+    <p><a href="https://ja.wikipedia.org/wiki/RGB">RGB</a> vs <a href="https://ja.wikipedia.org/wiki/HSV%E8%89%B2%E7%A9%BA%E9%96%93">HSB</a></p>
+    <p><a href="http://contest.japias.jp/tqj2000/30317/head/Dgazo/kaho/kaho.htm">加法混色・減法混色</a></p>
+    <ul>
+      <li>引数の並び:<b>(red, green, blue, alpha)</b></li>
+      <ul>
+        <li>引数１つならグレースケール</li>
+        <li>引数３つなら不透明</li>
+      </ul>
+      <li>明示的にもかける:(red)</li>
+      <li>x6でもかける:('#ff0000')</li>
+    </ul>
+    <code>
+      <pre class="prettyprint lang-js">
+        function setup() {
+          createCanvas(720, 720);
+          noCursor();
+        }
+
+        function draw() {
+          colorMode(HSB, 360, 100, 100);
+          rectMode(CENTER);
+          noStroke();
+          background(mouseY/2, 100, 100);
+
+          fill(360-mouseY/2, 100, 100);
+          rect(360, 360, mouseX+1, mouseX+1);
+        }
+      </pre>
+    </code>
+    <h3>変数</h3>
+    <ul>
+      <li>宣言をしてから使う</li>
+      <li>jsの場合は</li>
+      <ul>
+        <li>let</li>
+        <li>const</li>
+      </ul>
+      <li>明示的に名前をつける</li>
+      <li>器のようなものでなんでも入る</li>
+      <li>出し入れ可能</li>
+    </ul>
+    <code>
+      <pre class="prettyprint lang-js">
+        //1,宣言：使用する変数名を宣言（箱を準備する）
+        let num;
+        //2,代入：変数の箱に値を入れる
+        //この場合のイコールは代入を意味する
+        num = 400;
+        //3,演算して代入
+        //等式ではない！代入！
+        num = num + 1;
+        //下でも同じ意味
+        num++;
+      </pre>
+    </code>
+    <h3>比較演算子</h3>
+    <p>右辺と左辺を比較する</p>
+    <ul>
+      <li><b>等価：</b>==</li>
+      <li><b>不等価：</b>!=</li>
+      <li><b>一致：</b>===</li>
+      <li><b>不一致：</b>!==</li>
+    </ul>
+    <h3>関係演算子</h3>
+    <ul>
+      <li><b>大なり：</b>></li>
+      <li><b>大なりイコール：</b>>=</li>
+      <li><b>小なり：</b><</li>
+      <li><b>小なりイコール：</b><=</li>
+    </ul>
+    <h3>論理演算子</h3>
+    <ul>
+      <li><b>AND：</b>&&</li>
+      <li><b>OR：</b>||</li>
+      <li><b>NOT：</b>!</li>
+    </ul>
+    <h3>分岐（if文）</h3>
+    <p>条件式を書き、そこに当てはまればカーリーブラケット内部の処理を実行する</p>
+    <code>
+      <pre class="prettyprint lang-js">
+        if (i == 0) {
+          text("iは0です", 0, 0);
+        }else if (i > 0) {
+          text("iは正の数です", 0, 0);
+        }else {
+          text("iは負の数です", 0, 0);
+        }
+      </pre>
+    </code>
+    <h3>反復(for文)</h3>
+    <p>初期化式と継続条件式と再初期化式で成り立つ</p>
+    <img src="../img/for01.png" alt="">
+    <img src="../img/for02.png" alt="">
+    <code>
+      <pre class="prettyprint lang-js">
+        for (let i = 0; i < 10; i++) {
+          text("iは10未満です");
+        }
+      </pre>
+    </code>
+    <p>無限ループ(eternal loop)</p>
+    <code>
+      <pre class="prettyprint lang-js">
+        for (let i = 0; i < 10; i--) {
+          text("iは10未満です");
+        }
+      </pre>
+    </code>
+    <h3>入れ子状のループ(nested loop)</h3>
+    <p>コピペしない</p>
+    <code>
+      <pre class="prettyprint lang-js">
+        let r= 0, g= 0, b= 0, a= 0;
+
+        function setup() {
+          createCanvas(400, 400);
+          frameRate(10);
+          r++;
+          print('r:'+ r);
+          for (let i= 0; i< 10; i++) {
+            g = g + 1;
+            print('g:'+ g);
+            for (let j= 0; j< 10; j++) {
+              b = b + 1;
+              print('b:'+ b);
+            }
+          }
+        }
+
+        function draw() {
+          background(r, g, b, a);
+          a++;
+          textSize(20);
+          fill(120);
+          text('r:' + r, 10, 20);
+          text('g:' + g, 10, 50);
+          text('b:' + b, 10, 80);
+          text('a:' + a, 10, 110);
+        }
+      </pre>
+    </code>
+    <h3>Task: 写経</h3>
+    <p>コピペしない</p>
+    <code>
+      <pre class="prettyprint lang-js">
+        let originX = 0,
+            soriginY = 0;
+
+        function setup() {
+          createCanvas(600, 600);
+          noCursor();
+          print('setOrigin(X:' + originX + ',Y:' + originY + ')')
+        }
+
+        function draw() {
+          background(220);
+          const step = 50;
+          stroke(200);
+          for (let x = step; x < width; x += step) {
+            line(x, 0, x, height);
+          }
+
+          for (let y = step; y < height; y += step) {
+            line(0, y, width, y);
+          }
+
+          stroke(255, 0, 255);
+          point(originX, originY);
+          noStroke();
+          fill(255, 0, 255);
+          push();
+          text('ORIGIN', originX - 44, originY - 2);
+
+          if (mouseX > 0 && mouseX <= width && mouseY > 0 && mouseY <= height) {
+            pop();
+            ellipse(mouseX, mouseY, 5, 5);
+            let rerativeX = mouseX - originX,
+                rerativeY = mouseY - originY;
+            text('(x:' + rerativeX + ',y:' + rerativeY + ')', mouseX + 5, mouseY + 10);
+            if (mouseX == originX || mouseY == originY) {
+              stroke('#FF00FF');
+              line(originX, 0, originX, height);
+              line(0, originY, width, originY);
+            }
+          }else {
+            stroke('#FF00FF');
+            rect(originX - 3, originY - 3, 6, 6);
+            pop();
+            text('(x:0,y:0)', originX + 5, originY + 10);
+          }
+        }
+
+        function keyPressed() {
+          if (key == 's') {
+            originX = mouseX;
+            originY = mouseY;
+            print('setOrigin(X:' + originX + ',Y:' + originY + ')')
+          }
+          if (key == 'z') {
+            originX = 0;
+            originY = 0;
+            print('setOrigin(X:' + originX + ',Y:' + originY + ')')
+          }
+        }
+        }
+      </pre>
+    </code>
+  </body>
+</html>

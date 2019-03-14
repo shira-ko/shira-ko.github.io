@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>KUAD_OL4P_2019</title>
+    <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:400,700&amp;subset=japanese" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <style type="text/css">
+      body {
+        font-family: 'M PLUS Rounded 1c';
+        color: #444444;
+        background-color: #eeeeee;
+      }
+      a:link { color: #ff00ff; }
+      a:visited { color: #444444; }
+    </style>
+  </head>
+  <body>
+    <h2>practise:1 模写</h2>
+    <p>プログラミングで模写をします</p>
+    <h3>Assignment:1 家紋</h3>
+    <ul>
+      <li>家紋は幾何形態の複合でできているものが多く、法則性も見つけやすい</li>
+      <li>同じ模様を、反復させたり回転させたりするものも多い</li>
+      <li>まずは基準となる最小の要素から始めると吉</li>
+    </ul>
+    <p><a href="https://ja.wikipedia.org/wiki/%E5%AE%B6%E7%B4%8B%E3%81%AE%E4%B8%80%E8%A6%A7">家紋の一覧</a></p>
+    <h3>Assignment:2 太陽をかこう</h3>
+    <p>
+      <i>ブルーノ・ムナーリ「太陽をかこう」</i>からインスパイアを受けて、太陽をかいてみよう
+      <br>サンプルコードに感性を追加する
+    </p>
+
+    <code>
+      <pre class="prettyprint lang-js">
+        function setup() {
+          createCanvas(700, 700);
+          background(255);
+          translate(width/2, height/2);
+          noFill();
+          for (i = 0; i < 100; i ++) {
+            stroke(255, 255, 0);
+            ellipse(0, 0, random(30, 600));
+            stroke(255, 0, 0);
+            ellipse(0, 0, random(100, 400));
+          }
+        }
+
+        function draw() {
+
+        }
+      </pre>
+    </code>
+    <h3>Assignment:3 好きな絵画を模写</h3>
+    <p>sampleCode: mondriaan</p>
+    <code>
+      <pre class="prettyprint lang-js">
+        function setup() {
+          createCanvas(400, 400);
+
+        }
+
+        function draw() {
+          background(255);
+          noStroke();
+          fill(255, 0, 0);
+          rect(110, 0, 300, 280);
+          fill(0, 0, 255);
+          rect(0, 280, 110, 125);
+          fill(255, 255, 0);
+          rect(350, 340, 50, 60);
+          stroke(0);
+          strokeCap(SQUARE);
+          strokeWeight(12);
+          line(110, 0, 110, 400)
+          line(0, 280, 400, 280);
+          line(350, 280, 350, 400);
+          strokeWeight(15);
+          line(350, 340, 400, 340);
+          strokeWeight(20);
+          line(0, 130, 110, 130);
+        }
+      </pre>
+    </code>
+    <p>変数を活用する</p>
+    <code>
+      <pre class="prettyprint lang-js">
+        var ax = 105;
+        var by = 280;
+        var cx = 355;
+        var cy = 340;
+        var dy = 130;
+
+        function setup() {
+          createCanvas(400, 400);
+
+        }
+
+        function draw() {
+          background(255);
+          noStroke();
+          fill(255, 0, 0);
+          rect(ax, 0, width - ax, by);
+          fill(0, 0, 255);
+          rect(0, by, ax, height - by);
+          fill(255, 255, 0);
+          rect(cx, cy, width - cx, height - cy);
+          stroke(0);
+          strokeCap(SQUARE);
+          strokeWeight(12);
+          line(ax, 0, ax, height)
+          line(0, by, width, by);
+          line(cx, by, cx, height);
+          strokeWeight(15);
+          line(cx, cy, width, cy);
+          strokeWeight(20);
+          line(0, dy, ax, dy);
+        }
+      </pre>
+    </code>
+    <code>
+      <pre class="prettyprint lang-js">
+        var origin = 195
+        var canvasSq = 700
+        function setup() {
+          createCanvas(canvasSq, canvasSq);
+        }
+
+        function draw() {
+          var x = width * 45 / origin;
+        	var y = height * 145 / origin;
+          var yx = width - (width * 18 / origin)
+          var yy = y + (width-y) / 2
+          var lx = x;
+          var ly = width * 65 /origin;
+          background(255);
+          noStroke();
+          fill(255, 0, 0);
+          rect(x, 0, width - x, y);
+          fill(0, 0, 255);
+          rect(0, y, x, height);
+          fill(255, 255, 0);
+          rect(yx, yy, width - yx, height - yy);
+          stroke(0);
+          strokeCap(SQUARE);
+          strokeWeight(8 * canvasSq / origin);
+          line(x, 0, x, height);
+          line(0, y, width, y);
+          line(yx, y, yx, height);
+          strokeWeight(10 * canvasSq / origin);
+          line(yx, yy, width, yy);
+          strokeWeight(14 * canvasSq / origin);
+          line(0, ly, lx, ly);
+        }
+      </pre>
+    </code>
+    <p>インタラクティブ</p>
+    <code>
+      <pre class="prettyprint lang-js">
+        var origin = 195
+        var canvasSq = 600
+        function setup() {
+          createCanvas(canvasSq, canvasSq);
+        }
+
+        function draw() {
+          var x = mouseX;
+        	var y = mouseY;
+          var yx = width - (width * 18 / origin)
+          var yy = y + (width-y) / 2
+          var lx = x;
+          var ly = y * 13 / 29;
+          background(255);
+          noStroke();
+          fill(255, 0, 0);
+          rect(x, 0, width - x, y);
+          fill(0, 0, 255);
+          rect(0, y, x, height);
+          fill(255, 255, 0);
+          rect(yx, yy, width - yx, height - yy);
+          stroke(0);
+          strokeCap(SQUARE);
+          strokeWeight(8 * canvasSq / origin);
+          line(x, 0, x, height);
+          line(0, y, width, y);
+          line(yx, y, yx, height);
+          strokeWeight(10 * canvasSq / origin);
+          line(yx, yy, width, yy);
+          strokeWeight(14 * canvasSq / origin);
+          line(0, ly, lx, ly);
+        }
+      </pre>
+    </code>
+
+  </body>
+</html>
