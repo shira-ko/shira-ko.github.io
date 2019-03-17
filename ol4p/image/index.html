@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>KUAD_OL4P_2019</title>
+    <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:400,700&amp;subset=japanese" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <style type="text/css">
+      body {
+        font-family: 'M PLUS Rounded 1c';
+        color: #444444;
+        background-color: #eeeeee;
+      }
+      a:link { color: #ff00ff; }
+      a:visited { color: #444444; }
+    </style>
+  </head>
+  <body>
+  <h2>イメージの扱い方</h2>
+  <p>
+    イメージの扱いをサンプルコードから確認する
+  </p>
+  <hr>
+
+  <h4>[loadImg]</h4>
+  <code>
+    <h4>事前準備</h4>
+    <p>
+      読み込むイメージをWebEditorのサーバーにアップロードする必要がある
+      <br><a href="https://www.pexels.com/">pexels</a>
+    </p>
+    <ul>
+      <li>読み込みたい画像を用意する（300x300px程度）</li>
+      <li>半角英数で名前をつける</li>
+      <li>ページ上部左側の右向き矢印をクリック</li>
+      <li>"Project-folder"が出てきたら，右の下矢印をクリック</li>
+      <li>"Add file"で画像を追加する</li>
+    </ul>
+    <pre class="prettyprint lang-js">
+      let img;
+
+      function preload() {
+        //img = createImg('http://www.petwebsite.com/hamsters/hamsters_images/syrian-hamster_000008437184.jpg');
+        //img.hide();
+        img = loadImage('./pic1.jpg');　//読み込みたい画像の名前を入れる
+      }
+
+      function setup() {
+        createCanvas(300, 300);
+        // 原点に実寸のイメージを貼り付け
+        image(img, 0, 0);
+        // (0, 高さ半分)の位置にハーフサイズのイメージを貼り付け
+        image(img, 0, height / 2, img.width / 2, img.height / 2);
+      }
+
+      function draw() {
+
+      }
+    </pre>
+    <h4>task:</h4>
+    <ul>
+      <li>位置を変えてみる</li>
+      <li>比率を変えてみる</li>
+    </ul>
+  </code>
+  <hr>
+
+  <h4>[shiftImgValues]</h4>
+  <code>
+    <pre class="prettyprint lang-js">
+      let img; //画像データ
+
+      //プレロード
+      function preload() {
+        //画像をロード
+        img = loadImage('./pic1.jpg');
+      }
+
+      function setup() {
+      	frameRate(30);
+        createCanvas(600, 300);
+      }
+
+      function draw() {
+        background(0);
+        //色補正をリセット
+        noTint();
+        //元画像を左に表示
+        image(img, 0, 0);
+        //画像の明度をマウスのXY座標で変更
+        tint(255 - (mouseY / float(height) * 255));
+        /*
+        //画像のRGB値をマウスのY座標で変更
+        let r = mouseX / float(width) * 255;
+        let g = mouseY / float(height) * 255;
+        let b = 255;
+        tint(r, g, b);
+        */
+        //色を変更した画像を表示
+        image(img, width / 2, 0);
+      }
+    </pre>
+  </code>
+  <hr>
+
+  <h4>[lineGlitch]</h4>
+  <code>
+    <pre class="prettyprint lang-js">
+      let img;
+
+      function preload() {
+        img = loadImage('./pic.jpg');
+      }
+
+      function setup() {
+        createCanvas(1000, 1000);
+        image(img, 0, 0);
+      }
+
+      function draw() {
+        let x1 = floor(random(width));
+        let y1 = 50;
+
+        let x2 = round(x1 + random(-7, 7));
+        let y2 = round(y1 + random(-5, 5));
+
+        let w = floor(random(10, 40));
+        let h = height;
+
+        set(x2, y2, get(x1, y1, w, h));
+      }
+
+      function keyReleased() {
+        if (key == 's' || key == 'S') saveCanvas(gd.timestamp(), 'png');
+        if (keyCode == DELETE || keyCode == BACKSPACE) {
+          clear();
+          image(img, 0, 100);
+        }
+      }
+    </pre>
+  </code>
+  <hr>
+
+  <h4>[rectGlitch]</h4>
+  <code>
+    <pre class="prettyprint lang-js">
+      let img;
+
+      function preload() {
+        img = loadImage('./pic.jpg');
+      }
+
+      function setup() {
+        createCanvas(1000, 1000);
+        image(img, 0, 0);
+      }
+
+      function draw() {
+        let x1 = random(width);
+        let y1 = random(height);
+
+        let x2 = round(x1 + random(-10, 10));
+        let y2 = round(y1 + random(-10, 10));
+
+        let w = 150;
+        let h = 50;
+
+        set(x2, y2, get(x1, y1, w, h));
+      }
+
+      function keyReleased() {
+        if (key == 's' || key == 'S') saveCanvas(gd.timestamp(), 'png');
+        if (keyCode == DELETE || keyCode == BACKSPACE) {
+          clear();
+          image(img, 0, 0);
+        }
+      }
+    </pre>
+  </code>
+  <hr>
+
+  <h4>[img2Dots]</h4>
+  <code>
+    <pre class="prettyprint lang-js">
+      let img;
+
+      function preload() {
+        img = loadImage('./pic2.jpg');
+      }
+
+      function setup() {
+        createCanvas(600, 600);
+        print(img.width + ' • ' + img.height);
+      }
+
+      function draw() {
+        background(255);
+
+        let mouseXFactor = map(mouseX, 0, width, 0.05, 1);
+
+        for (let gridX = 0; gridX < img.width; gridX++) {
+          for (let gridY = 0; gridY < img.height; gridY++) {
+            // grid position + tile size
+            let tileWidth = width / img.width;
+            let tileHeight = height / img.height;
+            let posX = tileWidth * gridX;
+            let posY = tileHeight * gridY;
+
+            // get current color
+            img.loadPixels();
+            let c = color(img.get(gridX, gridY));
+            // greyscale conversion
+            let greyscale = round(red(c) * 0.222 + green(c) * 0.707 + blue(c) * 0.071);
+
+            // greyscale to ellipse area
+            fill(0);
+            noStroke();
+            let r2 = 1.1284 * sqrt(tileWidth * tileWidth * (1 - greyscale / 255));
+            r2 *= mouseXFactor * 3;
+            ellipse(posX, posY, r2, r2);
+
+          }
+        }
+      }
+    </pre>
+  </code>
+  <hr>
+
+  </body>
+</html>

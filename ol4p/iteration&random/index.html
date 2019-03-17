@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>KUAD_OL4P_2019</title>
+    <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:400,700&amp;subset=japanese" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <style type="text/css">
+      body {
+        font-family: 'M PLUS Rounded 1c';
+        color: #444444;
+        background-color: #eeeeee;
+      }
+      a:link { color: #ff00ff; }
+      a:visited { color: #444444; }
+    </style>
+  </head>
+  <body>
+  <h2>反復と乱数</h2>
+  <p>
+    反復（iteration）や乱数（random）を使うことで，様々な表現が可能．
+    <br>作例を写経しながら，確認していく．
+  </p>
+  <hr>
+
+  <h4>[circleBrush]</h4>
+  <code>
+    <pre class="prettyprint lang-js">
+      function setup() {
+        createCanvas(400, 400);
+        background(230);
+        strokeWeight(2);
+      }
+
+      function draw() {
+        if (mouseIsPressed) {
+          noStroke();
+          fill(230);
+        } else {
+          stroke(100);
+          fill(250);
+        }
+        ellipse(mouseX, mouseY, 50, 50);
+      }
+    </pre>
+    <h4>task:</h4>
+    <ul>
+      <li>ブラシのサイズや形を変えてみる</li>
+      <li>軌跡が消えるようにしてみる</li>
+    </ul>
+  </code>
+  <hr>
+
+  <h4>[accelerationBrush]</h4>
+  <code>
+    <pre class="prettyprint lang-js">
+      function setup() {
+        createCanvas(600, 600);
+        background(102);
+      }
+
+      function draw() {
+        variableEllipse(mouseX, mouseY, pmouseX, pmouseY);
+      }
+
+      function variableEllipse(x, y, px, py) {
+        var speed = abs(x-px) + abs(y-py);
+        stroke(speed);
+        ellipse(x, y, speed, speed);
+      }
+    </pre>
+    <h4>task:</h4>
+    <ul>
+      <li>色を変えてみる</li>
+    </ul>
+  </code>
+  <hr>
+
+  <h4>[gridSpectrum]</h4>
+  <code>
+    <pre class="prettyprint lang-js">
+      let stepX;
+      let stepY;
+
+      function setup() {
+        createCanvas(800, 400);
+        background(0);
+        noStroke();
+      }
+
+      function draw() {
+        colorMode(HSB, width, height, 100);
+
+        stepX = mouseX + 2;
+        stepY = mouseY + 2;
+
+        for (let gridY = 0; gridY < height; gridY += stepY) {
+          for (let gridX = 0; gridX < width; gridX += stepX) {
+            fill(gridX, height - gridY, 100);
+            rect(gridX, gridY, stepX, stepY);
+            //print('gX:' + gridX + 'gY' + gridY);
+          }
+        }
+      }
+    </pre>
+  </code>
+  <hr>
+
+  <h4>[DrawingTheSun]</h4>
+  <code>
+    <pre class="prettyprint lang-js">
+      function setup() {
+        const swLimit = 15;
+        const yoLimit = 50;
+        const roLimit = 20;
+        createCanvas(700, 700);
+        background(255);
+        translate(width / 2, height / 2);
+        noFill();
+        stroke(255, 255, 0, 90);
+        for (i = 0; i < 150; i++) {
+          stroke(255, 255, 0, 90);
+          strokeWeight(random(swLimit));
+          ellipse(random(-yoLimit, yoLimit), random(-yoLimit, yoLimit), random(30, 600));
+          stroke(255, 0, 0, 85);
+          strokeWeight(random(swLimit));
+          ellipse(random(-roLimit, roLimit), random(-roLimit, roLimit), random(100, 400));
+        }
+      }
+
+      function draw() {
+        //background(220);
+      }
+    </pre>
+  </code>
+  <hr>
+
+  <h4>[snowNoise]</h4>
+  <code>
+    <pre class="prettyprint lang-js">
+      var actRandomSeed = 0
+
+      function setup() {
+          createCanvas(600, 600);
+        }
+
+      function draw() {
+        background(0);
+        randomSeed(actRandomSeed);
+
+        for (let x = 0; x < width; x++) {
+          for (let y = 0; y < height; y++) {
+            set(x, y, random(255));
+          }
+        }
+
+        updatePixels();
+      }
+
+      function mousePressed() {
+        actRandomSeed = random(100000);
+      }
+
+      function keyReleased() {
+        if (key == 's' || key == 'S') saveCanvas('snowNoise', 'png');
+    </pre>
+    <h4>task:</h4>
+    <ul>
+      <li>マルチカラーノイズにしてみる</li>
+      <li>jpegでセーブできるようにしてみる</li>
+      <li>昔の砂嵐の画面みたいにチラつかせてみる</li>
+    </ul>
+  </code>
+  <hr>
+
+  <h4>[circularDots]</h4>
+  <code>
+    <pre class="prettyprint lang-js">
+      let actRandomSeed = 0;
+      let count = 100;
+      const px = 600;
+
+      function setup() {
+        createCanvas(px, px);
+        cursor(CROSS);
+        noStroke();
+        fill(0,130,164);
+      }
+
+      function draw() {
+        background(240);
+
+        let faderX = (abs(mouseX - width / 2) + abs(mouseY - height / 2)) / px;
+
+        randomSeed(actRandomSeed);
+        let angle = radians(360 / count);
+        for (let i = 0; i < count; i++) {
+          // positions
+          let randomX = random(0, width);
+          let randomY = random(0, height);
+          let circleX = width / 2 + cos(angle * i) * px / 3;
+          let circleY = height / 2 + sin(angle * i) * px / 3;
+
+          let x = lerp(circleX, randomX, faderX);
+          let y = lerp(circleY, randomY, faderX);
+
+          circle(x, y, 5);
+        }
+      }
+    </pre>
+  </code>
+  <hr>
+
+  <h4>[circularParticles]</h4>
+  <code>
+    <pre class="prettyprint lang-js">
+      let count = 360;
+      const px = 600;
+
+      function setup() {
+        createCanvas(px, px);
+        cursor(CROSS);
+        noStroke();
+      }
+
+      function draw() {
+        background(240);
+
+        let faderX = (abs(mouseX - width / 2) + abs(mouseY - height / 2)) / px;
+
+        let angle = radians(360 / count);
+        for (let i = 0; i < count; i++) {
+          let randomX = random(0, width);
+          let randomY = random(0, height);
+          let circleX = width / 2 + cos(angle * i) * px / 3;
+          let circleY = height / 2 + sin(angle * i) * px / 3;
+
+          let x = lerp(circleX, randomX, faderX);
+          let y = lerp(circleY, randomY, faderX);
+
+          fill(0, random(100, 255));
+          circle(x, y, random(0, 5));
+        }
+      }
+    </pre>
+  </code>
+  <hr>
+
+  <h3>配列</h3>
+  <p>
+    一つの変数で，複数の値を格納する方法
+    Array（アレイ）とも呼ばれる
+  </p>
+  <code>
+    <pre class="prettyprint lang-js">
+      function setup() {
+        //createCanvas(400, 400);
+        //コンストラクタ：空配列が作れる
+        let arr = new Array(5);
+        //リテラル：普段はこちらが便利
+        let ary = [1, 2, 3, 4, 5];
+        print(arr);
+        print(ary);
+
+        ary = [];
+        for (let i = 0; i < 100; i++) {
+          ary.push(i);
+        }
+        print(ary);
+      }
+
+      function draw() {
+        //background(220);
+      }
+    </pre>
+  </code>
+  <p>
+    ネストも可能．入れれば多次元配列に
+    <br><a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array">JavaScriptにおける配列のメソッド</a>
+  </p>
+  <hr>
+
+  <h4>[circularRays]</h4>
+  <code>
+    <pre class="prettyprint lang-js">
+      let count = 360;
+      const cRange =255 ;
+      const px = 700 ;
+
+      function setup() {
+        createCanvas(px, px);
+        cursor(CROSS);
+        noStroke();
+        //frameRate(10);
+      }
+
+      function draw() {
+        background(240);
+
+        let faderX = (abs(mouseX - width / 2) + abs(mouseY - height / 2)) / px;
+
+        let angle = radians(360 / count);
+        let ary = [];
+        for (let i = 0; i < count; i++) {
+          // positions
+          let randomX = random(0, width);
+          let randomY = random(0, height);
+          let circleX = width / 2 + cos(angle * i) * px / 3;
+          let circleY = height / 2 + sin(angle * i) * px / 3;
+
+          let x = lerp(circleX, randomX, faderX);
+          let y = lerp(circleY, randomY, faderX);
+          ary.push([x, y]);
+        }
+        beginShape();
+        stroke(random(cRange), random(cRange), random(cRange), 180);
+        noFill();
+      /*
+      //一般的なfor文の書き方．.lengthメソッドを使って配列の長さをGetだぜ
+        for (let i = 0; i < ary.length; i++) {
+          let xy = ary[i];
+          vertex(xy[0], xy[1]);
+        }
+      */
+
+      /*
+      //for inを使って条件式以降を省略
+        for (let i in ary) {
+          let xy = ary[i]
+          vertex(xy[0], xy[1]);
+        }
+      */
+      //配列のメソッド　forEachを使って限りなく短く
+        ary.forEach(function(xy) {
+          vertex(xy[0], xy[1]);
+        });
+
+        endShape(CLOSE);
+      }
+    </pre>
+  </code>
+  <hr>
+
+  </body>
+</html>
