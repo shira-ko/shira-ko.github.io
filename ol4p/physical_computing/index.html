@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>KUAD_OL4P_2019</title>
+    <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:400,700&amp;subset=japanese" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <style type="text/css">
+      body {
+        font-family: 'M PLUS Rounded 1c';
+        color: #444444;
+        background-color: #eeeeee;
+      }
+      a:link { color: #ff00ff; }
+      a:visited { color: #444444; }
+    </style>
+  </head>
+  <body>
+    <h2>Arduinoを始めよう！</h2>
+    <p>
+      ワンボードマイコンの一種で，2005年にイタリアのInteraction Design Institute Ivreaで，
+      <br>「安価で簡便なデジタル制御装置を作り販売するプロジェクト」として始まった．
+      <br>I/Oポートを備え，インタラクティブな装置として用いることができる．
+      <br>ハードウェアの設計はクリエイティブ・コモンズライセンスで，
+      <br>統合開発環境のソースコードもGPL v2ライセンスで提供されている．
+    </p>
+    <ul>
+      <li>Arduinoボード</li>
+      <img src="../img/ArduinoUnoR3.jpg" alt="">
+      <li>統合開発環境（IDE）</li>
+      <img src="../img/arduino_ide.png" alt="">
+    </ul>
+
+    <h3>ArduinoCreate</h3>
+    <p>ここではweb開発環境"ArduinoCreate"を使う</p>
+    <ol>
+      <li><a href="https://create.arduino.cc/">Arduino Create</a>にWebページに行く</li>
+      <img src="../img/a01.png" alt="">
+      <li>Arduino Web Editorをクリック</li>
+      <img src="../img/a02.png" alt="">
+      <li>google Accountサインインしましょう</li>
+      <img src="../img/a03.png" alt="">
+      <li>ユーザーネーム埋めるのと一番上の項目をチェック</li>
+      <img src="../img/a04.png" alt="">
+      <li>webEditorがひらく！</li>
+      <img src="../img/a05.png" alt="">
+      <li>ちょっと戻って，<a href="<a href="#"></a>">GettingStarted</a>を開く</li>
+      <img src="../img/a06.png" alt="">
+      <li>一番下のArduinoPluginをクリック</li>
+      <img src="../img/a07.png" alt="">
+      <li>次々進んでdmgファイルをダウンロードする</li>
+      <img src="../img/a08.png" alt="">
+      <img src="../img/a09.png" alt="">
+      <li>dmgファイルを展開し，installerを起動してインストールする</li>
+      <li>これで初期設定終了Editorに戻り開発を始める</li>
+    </ol>
+
+    <hr>
+
+    <h4>>[Lチカ！]</h4>
+    <p>
+      フィジカルコンピューティングの"Hello, World！"
+      <br>Lチカ（LEDがチカチカ明滅する）をやる
+    </p>
+    <code>
+      <h4>事前準備</h4>
+      <p>LEDには極性がある⬇︎⬇︎</p>
+      <img src="../img/led.jpg" alt="">
+      <p>電源を入れていない状態で，
+        <br><b>アノードを13番ピン</b>
+        <br><b>カソードをGND</b>
+        <br>に差し込む
+      </p>
+      <h4>しゃきょう！</h4>
+      <pre class="prettyprint lang-js">
+        void setup() {
+          // デジタルピンの初期化：13番ピンを出力に設定
+          pinMode(13, OUTPUT);
+        }
+
+        // loop関数はp5jsのdraw関数とおなじ
+        void loop() {
+          digitalWrite(13, HIGH);   // LEDをON
+          delay(1000);              // 1秒待つ
+          digitalWrite(13, LOW);    // LEDをOFF
+          delay(1000);              // 1秒待つ
+        }
+      </pre>
+
+      <h4>プログラムをアップロードする</h4>
+      <p>
+        小さいとはいえ，Arduinoはパソコンのようなもの
+        <br>プログラムをアップロードしないと動かない
+      </p>
+      <ol>
+        <li>PCとArduinoをつなぐ</li>
+        <img src="../img/aa01.png" alt="">
+        <li>Arduinoって書いてあるポートを選択
+          <br>（見えない人はプラグインが上手く入っていない可能性がある）
+        </li>
+        <img src="../img/aa00.png" alt="">
+        <li>コードのVerify!(検証する)</li>
+        <img src="../img/aa02.png" alt="">
+        <li>アップロード！</li>
+        <img src="../img/aa03.png" alt="">
+        <li>上手くいけば，LEDがフラッシュした後，１秒ごとに明滅する</li>
+        <li>Hello, Physical World!</li>
+      </ol>
+      <h4>task</h4>
+      <ul>
+        <li>明滅のタイミングを変えてみる</li>
+        <li>モールス信号で"SOS"送ってみる</li>
+      </ul>
+    </code>
+    <hr>
+
+  </body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>KUAD_OL4P_2019</title>
+    <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:400,700&amp;subset=japanese" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <style type="text/css">
+      body {
+        font-family: 'M PLUS Rounded 1c';
+        color: #444444;
+        background-color: #eeeeee;
+      }
+      a:link { color: #ff00ff; }
+      a:visited { color: #444444; }
+    </style>
+  </head>
+
+  <body>
+    <h2>センサーとアクチュエーター</h2>
+    <h3>センサー</h3>
+    <p>
+      インプットデバイスとも呼ばれ，周辺環境情報を取得し送信する．
+      <br>人間でいったら「感覚器官」．耳や目，皮膚など．
+      <br>デジタルセンサーとアナログセンサーがあり，デバイスそのものは，
+      <br>デジタルはHIGHかLOW（0か1）などの数値を離散的に返し，
+      <br>アナログは0〜1023などの値を概ね電圧を使い連続的に返す．
+      <br>デバイスによっては，デジタル信号を返すものもある．
+    </p>
+
+    <hr>
+    <h4>[getSensVal]</h4>
+    <p>
+      センサーで情報を取得し，パソコンのシリアルポートから値を受け取ってみる
+    </p>
+    <code>
+      <h4>事前準備</h4>
+      <p><b>電源を入れていない状態で，</b>センサーをArduinoにつなぐ</p>
+      <ol>
+        <li>センサーから出てきている線は3本</li>
+        <img src="../img/sensor.jpg" alt="">
+        <li>それぞれ以下のような配置</li>
+        <img src="../img/cable.jpg" alt="">
+        <li>ジャンパー線を使って，Arduinoと接続する信号はA0</li>
+        <img src="../img/pin.jpg" alt="">
+      </ol>
+
+      <h4>しゃきょう！</h4>
+      <pre class="prettyprint lang-js">
+void setup() {
+  // 9600bpsで通信をするように，シリアルポートを初期化
+  Serial.begin(9600);
+}
+
+void loop() {
+  // アナログピン0(A0)の値を読み，セットバリュー変数に格納
+  int sensorValue = analogRead(A0);
+  // 読み込んだ値をシリアルポートに（IDEで読める形で）送信
+  Serial.println(sensorValue);
+  // 安定的に値を読めるように，1/1000秒まつ
+  delay(1);
+}
+      </pre>
+
+      <h4>アップロード＆値をゲット！</h4>
+      <ol>
+        <li>さっきと同じように検証後のアップロード</li>
+        <li>組み込みLEDがフラッシュしたら，エディタの左側にある"Monitor"を開く</li>
+      </ol>
+
+      <h4>task</h4>
+      <ul>
+        <li>センサーを変えてみて，帰ってくる値を確認する</li>
+      </ul>
+      </code>
+    <hr>
+
+    <h3>アクチュエーター</h3>
+    <p>
+      アウトプットデバイスとも呼ばれ，命令に合わせて何かしらの仕事をし出力する．
+      <br>人間で言ったら，筋肉や声帯など．
+      <br>DCモータは電流から磁場を発生し回転運動に変えるし，
+      <br>サーボモータは上記と仕事＋信号を受け取りた上で，位置（角度）の制御が可能．
+      <br>ディスプレイは液晶などを使い図形を描ける
+      <br>スピーカーは音が出るし，LEDは光るという仕事をそれぞれ行える．
+    </p>
+    <hr>
+
+    <hr>
+    <h4>[helloServo]</h4>
+    <p>
+      サーボモーターを動かしてみる
+    </p>
+    <code>
+      <h4>事前準備</h4>
+      <p><b>電源を入れていない状態で，</b>サーボをArduinoにつなぐ</p>
+      <ol>
+        <li>サーボから出てきている線は3本</li>
+        <img src="../img/s01.jpg" alt="">
+        <li>それぞれ以下のような配置</li>
+        <img src="../img/s02.jpg" alt="">
+        <li>ジャンパー線を使って，Arduinoと接続する信号はD10</li>
+        <img src="../img/s03.jpg" alt="">
+      </ol>
+
+      <h4>しゃきょう！</h4>
+      <pre class="prettyprint lang-js">
+// ライブラリの読み込み
+#include <Servo.h>
+// サーボオブジェクトを作る
+Servo myservo;
+//中間位置を設定
+const int neutral = 95;
+
+void setup () {
+  myservo.attach(10);  // サーボの信号ピンをD9に
+}
+
+void loop () {
+  // 時計回り高速
+  myservo.write(neutral - 90);
+  delay(2000);
+  // 停止
+  myservo.write(neutral);
+  delay(1000);
+  // 反時計回り高速
+  myservo.write(neutral + 90);
+  delay(2000);
+  // 停止
+  myservo.write(neutral);
+  delay(1000);
+   // 時計回り低速
+  myservo.write(neutral - 10);
+  delay(2000);
+  // 停止
+  myservo.write(neutral);
+  delay(1000);
+  // 反時計回り低速
+  myservo.write(neutral + 10);
+  delay(2000);
+  // 停止
+  myservo.write(neutral);
+  delay(1000);
+}
+      </pre>
+
+      <h4>サーボはどうやって制御されている？</h4>
+      <p><a href="https://monoist.atmarkit.co.jp/mn/articles/1605/12/news007_2.html">PWM</a>で制御しています</p>
+      </code>
+    <hr>
+
+  </body>
+</html>

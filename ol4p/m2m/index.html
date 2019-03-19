@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ja" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>KUAD_OL4P_2019</title>
+    <link href="https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:400,700&amp;subset=japanese" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <style type="text/css">
+      body {
+        font-family: 'M PLUS Rounded 1c';
+        color: #444444;
+        background-color: #eeeeee;
+      }
+      a:link { color: #ff00ff; }
+      a:visited { color: #444444; }
+    </style>
+  </head>
+
+  <body>
+    <h2>M2M通信</h2>
+    <p>
+      p5jsでセンサーの値を受け取れるようにする
+      <br>ブラウザ上で動いているので，ちょっと癖がある
+    </p>
+
+    <hr>
+    <h3>シリアルライブラリの読み込み</h3>
+    <p>
+      ブラウザ側からライブラリを読み込んだ上，
+      <br>ホストアプリから値を受け取る．
+      <br>アプリとライブラリは以下からp5jsSerialフォルダをダウンロード
+    </p>
+    <p><a href="https://drive.google.com/drive/folders/1x_dGv0Jba5ztH7RvnflavQ25YugqYcuX?usp=sharing (edited) "target="_blank">p5jsSerial_assets</a></p>
+    <h4>p5.serialcontrol</h4>
+    <p>
+      ホストアプリ
+      <br>これを使ってシリアルポートから，値を受け取る．
+      <br>ウェブソケットを使って，p5jsに値を渡す．
+    </p>
+    <img src="../img/socket-serial-connection-1.png" alt="">
+    <h4>p5.serialport.js</h4>
+    <p>
+      ライブラリ
+      <br>読み込むために，p5jsのproject-folderにアップロードする
+      <br>あげただけだと読み込まれないので，
+      <br>index.htmlで読み込むための　scriptタグを書き足す．
+      <br>実際は，すでにあるindex.htmlを削除して．ダウンロードしてきた物をあげればおk．
+    </p>
+    <h4>SerialPort(port name)</h4>
+    <p>
+      多分みんな違うので，個別に調べる必要がある．
+      <br>ArduinoCreateのMonitorで調べるのが良い．
+      <br>以下を見る．
+    </p>
+    <img src="../img/port.png" alt="">
+    <p>！！！！！！！！<b>at以降</b>です！！！！！！！！！！！</p>
+    <hr>
+    <h3>p5js</h3>
+    <h4>[getSensVal]
+    <code>
+      <pre class="prettyprint lang-js">
+        let serial; // シリアルポートのインスタンスを格納する変数
+        let portName = '/dev/cu.usbmodem14301'; // 自分のポートネームを入れる
+        let inData
+
+        function setup() {
+          serial = new p5.SerialPort(); // シリアルライブラリをインスタンス化
+          serial.open(portName); // シリアルポートを開く
+          createCanvas(400, 300); //キャンバスを作成
+        }
+
+
+        function draw() {
+          background(0); //背景色を黒に
+          fill(255); //　文字の色を白に
+          if (serial.available()) { // もしシリアルでデータを受けたら
+            inData = serial.read(); // inData変数にシリアルのデータを格納
+          }
+          text("sensor value: " + inData, 30, 30); // inData変数をテキスト表示
+        }
+      </pre>
+    </code>
+    <h3>Arduino</h3>
+    <h4>[sendSensVal]</h4>
+    <code>
+      <pre class="prettyprint lang-js">
+void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+  int sensorValue = analogRead(A0);
+  //ホストアプリが255天井で数字を受け取らなくなるので，Arduino側で一旦map()
+  int val = map(sensorValue, 0, 1023, 0, 255);
+  Serial.write(val);
+  delay(100);
+}
+
+      </pre>
+    </code>
+    <hr>
+
+  </body>
+</html>
